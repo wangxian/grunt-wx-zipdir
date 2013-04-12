@@ -1,12 +1,12 @@
 {
   "name": "grunt-wx-zipdir",
-  "description": "Grunt plugin , zip a directory",
-  "version": "0.1.0",
+  "description": "Grunt plugin, zip a directory",
+  "version": "0.2.0",
   "homepage": "https://github.com/wangxian/grunt-wx-zipdir",
   "author": {
     "name": "wangxian",
     "email": "xian366@126.com",
-    "url": "http://wangxian.me"
+    "url": "http://wangxian.me/"
   },
   "repository": {
     "type": "git",
