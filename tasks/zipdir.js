@@ -7,8 +7,9 @@
  */
 
 'use strict';
-var fs  = require("fs");
-var zip = new require('node-zip')();
+var fs   = require("fs");
+var path = require("path");
+var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
 
@@ -30,6 +31,7 @@ module.exports = function(grunt) {
     }
 
     option.src.forEach(function(v){
+      grunt.log.ok('Copy directoriy '+ v +' -> '+ target);
       grunt.file.recurse(v, function(abspath, rootdir, subdir, filename){
         var _exclude = option.exclude.filter(function(vt){
           return abspath.indexOf(vt) !== -1;
@@ -37,29 +39,38 @@ module.exports = function(grunt) {
         // console.log(abspath);
 
         // exclude files
-        if(_exclude.length < 1){
-          grunt.file.copy(abspath, target +'/'+ abspath);
+        var copyto = ( target +'/'+ abspath).replace(/\.\.\//g, '');
+        if(_exclude.length === 0){
+          // console.log( copyto );
+          grunt.file.copy(abspath, copyto);
         }
       });
-      grunt.log.ok('Copy directoriy:'+ v);
-
-      // Start add zip files
-      grunt.file.recurse(target, function(abspath, rootdir, subdir, filename){
-        // console.log(abspath);
-        var input = fs.readFileSync(abspath, 'binary');
-        zip.file(abspath, input, {binary: true});
-      });
-
-      var data = zip.generate({base64:false,compression:'DEFLATE'});
-      var zipfilename = option.dest + target +'-'+ pkginfo.version +'.zip';
-
-      // console.log(zipfilename);
-      grunt.log.ok('Write zip file to:'+ zipfilename);
-      grunt.file.write(zipfilename, data, {encoding: 'binary'});
-
-      grunt.verbose.ok('Clean zip tmp dir:'+ target);
-      grunt.file.delete(target);
     });
+
+    // Start add zip files
+    if(! option.zipbin) {
+      option.zipbin = 'zip';
+    }
+
+    var done = this.async();
+    grunt.log.ok(option.zipbin +' -r '+ option.dest +' '+ target);
+
+    grunt.file.write(path.dirname(option.dest)+'/tmp', '');
+    exec(option.zipbin +' -r '+ option.dest +' '+ target, function(error, stdout, stderr){
+      if (error !== null) {
+        grunt.log.error('exec error: '+ error);
+      }
+      else {
+        grunt.verbose.ok('stdout: '+ stdout);
+        grunt.verbose.ok('stderr: '+ stderr);
+
+        grunt.log.ok('Clean zip tmp dir -> '+ target +'/');
+        grunt.file.delete(target);
+        grunt.file.delete(path.dirname(option.dest)+'/tmp');
+        done(true);
+      }
+    });
+
   });
 
 };
