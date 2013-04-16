@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     zipdir: {
-      webapp: {src: ['tasks/', 'test/'], dest: 'tmp/', exclude: ['.svn', '.DS_Store']}
+      webapp: {src: ['tasks/', 'test/'], dest: 'tmp/abc.zip', exclude: ['.svn', '.DS_Store']}
     },
 
     // Unit tests.
