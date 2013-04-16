@@ -31,7 +31,7 @@ grunt.initConfig({
   }
 })
 ```
-it will generate a zip file in : `tmp/abc.zip.zip`
+it will generate a zip file in : `tmp/abc.zip`
 
 
 ## Contributing
