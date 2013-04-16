@@ -53,10 +53,10 @@ module.exports = function(grunt) {
     }
 
     var done = this.async();
-    grunt.log.ok(option.zipbin +' -r '+ option.dest +' '+ target);
+    grunt.log.ok(option.zipbin +' -r '+ option.dest +' '+ target+'/');
 
     grunt.file.write(path.dirname(option.dest)+'/tmp', '');
-    exec(option.zipbin +' -r '+ option.dest +' '+ target, function(error, stdout, stderr){
+    exec(option.zipbin +' -r '+ option.dest +' '+ target +'/', function(error, stdout, stderr){
       if (error !== null) {
         grunt.log.error('exec error: '+ error);
       }
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
 
         grunt.log.ok('Clean zip tmp dir -> '+ target +'/');
         grunt.file.delete(target);
-        grunt.file.delete(path.dirname(option.dest)+'/tmp');
+        grunt.file.delete(path.dirname(option.dest) +'/tmp', {force: true});
         done(true);
       }
     });
