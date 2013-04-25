@@ -1,4 +1,10 @@
-# grunt-wx-zipdir
+# Please use [grunt-contrib-compress](https://npmjs.org/package/grunt-contrib-compress) instead of it 
+
+`grunt-wx-zipdir` plugin has been destroyed . 
+
+------------------
+
+## grunt-wx-zipdir
 
 > Grunt plugin , zip a directory
 
@@ -38,6 +44,7 @@ it will generate a zip file in : `tmp/abc.zip`
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2013/4/25 - destroyed
 * 2013/4/16 - v0.3.0 - give up node-zip package, use os zip command, generate zipfile
 * 2013/4/12 - v0.2.0 - description mod.
 * 2013/4/12 - v0.1.0 - Initial release.
